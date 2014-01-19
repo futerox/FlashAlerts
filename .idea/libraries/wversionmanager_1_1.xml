@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="wversionmanager-1.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/CallerFlashlight/libs/wversionmanager-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

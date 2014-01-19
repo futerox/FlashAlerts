@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.futerox.flashlight"
+          android:versionCode="6"
+          android:versionName="1.5">
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="19"/>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+
+    <permission
+        android:name="android.permission.FLASHLIGHT"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="normal"/>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>-->
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
+    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>-->
+    <!--<uses-permission android:name="android.permission.GET_TASKS"/>-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="true"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name=".CallerFlashlight"
+        android:supportsRtl="true"
+        android:debuggable="false">
+
+    <activity
+            android:name="com.futerox.flashlight.MainPanel"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PrefsActivity"
+            android:label="@string/titlePrefs"
+            android:parentActivityName="com.futerox.flashlight.MainPanel">
+            <!-- spirosbond.callerflashlight -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.futerox.flashlight.MainPanel"/>
+        </activity>
+
+      <!--  <activity
+            android:name=".CallPrefs"
+            android:label="@string/titleCallPrefs"
+            android:parentActivityName="com.spirosbond.callerflashlight.MainPanel">
+            &lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.spirosbond.callerflashlight.MainPanel"/>
+        </activity>-->
+
+        <activity
+            android:name=".MsgPrefs"
+            android:label="@string/titleMsgPrefs"
+            android:parentActivityName="com.futerox.flashlight.MainPanel">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.futerox.flashlight.MainPanel"/>
+        </activity>
+
+
+        <activity
+            android:name=".FirstTimeUtilisation"
+            android:label="@string/first_time"
+            android:windowSoftInputMode="stateHidden"
+            android:noHistory="true"/>
+
+        <activity
+            android:name=".About"
+            android:label="@string/titleAbout"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.futerox.flashlight.MainPanel">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.futerox.flashlight.MainPanel"/>
+        </activity>
+
+        <activity
+            android:name=".AppList"
+            android:label="@string/AppList"
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation"
+            android:parentActivityName="com.futerox.flashlight.MsgPrefs">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.futerox.flashlight.MsgPrefs"/>
+
+        </activity>
+
+        <receiver android:name=".CallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".SmsReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".BatteryLevelReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW"/>
+                <action android:name="android.intent.action.BATTERY_OKAY"/>
+                <action android:name="android.intent.action.ACTION_BATTERY_LOW"/>
+                <action android:name="android.intent.action.ACTION_BATTERY_OKAY"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <!--<receiver android:name=".MediaButtonReceiver">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MEDIA_BUTTON"/>-->
+        <!--<action android:name="android.media.VOLUME_CHANGED_ACTION" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <service
+            android:name=".NotificationService"
+            android:label="@string/notification_service"
+            android:enabled="true"
+
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <!--android:exported="false"-->
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service"/>
+
+        </service>
+
+
+
+        <activity
+            android:name="com.google.ads.AdActivity"
+            android:configChanges="keyboard|screenLayout|uiMode|smallestScreenSize|keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+<!--
+            <meta-data
+                android:name="ADMOB_PUBLISHER_ID"
+               />-->
+        </activity>
+
+
+    </application>
+
+
+</manifest>
